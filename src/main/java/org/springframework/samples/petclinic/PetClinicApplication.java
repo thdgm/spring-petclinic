@@ -86,7 +86,7 @@ public class PetClinicApplication implements CommandLineRunner {
 	}
 
 	// Taller 2
-	public void Tarea2(Connection conn, String ciudad) throws Exception {
+	public String Tarea2(Connection conn) throws Exception {
 		try {
 			System.out.println("TALLER 2");
 			Scanner lectura = new Scanner(System.in);
@@ -100,7 +100,7 @@ public class PetClinicApplication implements CommandLineRunner {
 			System.out.println("Ingrese su Direccion: ");
 			String address = lectura.nextLine();
 			System.out.println("Ingrese su Ciudad: ");
-			ciudad = lectura.nextLine();
+			String ciudad = lectura.nextLine();
 			System.out.println("Ingrese su Telefono: ");
 			String telefono = lectura.nextLine();
 			System.out.println("Nuevo owner: " + nombre + " - " + apellido + " - " + ciudad + " - " + telefono);
@@ -118,6 +118,8 @@ public class PetClinicApplication implements CommandLineRunner {
 				pstmt.close();
 				System.out.println("Compruebo");
 				Tarea1(conn);
+				return ciudad;
+
 			}
 
 		}
@@ -125,10 +127,11 @@ public class PetClinicApplication implements CommandLineRunner {
 			System.out.println(e);
 			e.printStackTrace();
 		}
+		return null;
 	}
 
 	// Taller 3
-	public void Tarea3(Connection conn) throws Exception {
+	public void Tarea3(Connection conn, String ciudad) throws Exception {
 		try {
 
 			System.out.println("TALLER 3");
@@ -140,11 +143,12 @@ public class PetClinicApplication implements CommandLineRunner {
 			System.out.println("Ingrese una nueva Ciudad que reemplace a la anterior: ");
 			String nuevaCiudad = lectura.nextLine();
 
-			String sqlUpdate = "UPDATE owners SET city=? WHERE city='Soria'";
+			String sqlUpdate = "UPDATE owners SET city=? WHERE city=?";
 			PreparedStatement pstmt = conn.prepareStatement(sqlUpdate);
-
+			System.out.println("CIUDAD ANTERIOR:" + ciudad);
 			if (pstmt != null) {
 				pstmt.setString(1, nuevaCiudad);
+				pstmt.setString(2, ciudad);
 				System.out.println("Ciudad reemplazada con exito");
 				pstmt.execute();
 				pstmt.close();
@@ -333,13 +337,13 @@ public class PetClinicApplication implements CommandLineRunner {
 		// TALLER 2
 		////////////////////////////////////////////
 
-		Tarea2(conn, ciudad);
+		ciudad = Tarea2(conn);
 
 		////////////////////////////////////////////
 		// TALLER 3
 		////////////////////////////////////////////
 
-		Tarea3(conn);
+		Tarea3(conn, ciudad);
 
 		////////////////////////////////////////////
 		// TALLER 4
