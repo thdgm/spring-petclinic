@@ -64,6 +64,14 @@ public class Owner extends Person {
 	@OrderBy("name")
 	private List<Pet> pets = new ArrayList<>();
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "bill_id")
+	private List<Facturas> bills = new ArrayList<>();
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "cuenta_id")
+	private List<CuentaUsuario> cuentas = new ArrayList<>();
+
 	public String getAddress() {
 		return this.address;
 	}
